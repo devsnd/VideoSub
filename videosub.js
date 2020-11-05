@@ -108,11 +108,14 @@
 				// called on AJAX load onComplete (to work around element reference issues)
 				el.update = function(req) { 
 					el.subtitles = new Array();
-					records = req.split('\n\r');
+					// detect line ending style
+					const isWindows = req.indexOf('\r\n') != -1;
+					const lineSeparator = isWindows ? '\r\n' : '\n'
+					records = req.split(lineSeparator + lineSeparator);
 					for (var r=0;r<records.length;r++) {
 						record = records[r];
 						el.subtitles[r] = new Array();
-						el.subtitles[r] = record.split('\r');
+						el.subtitles[r] = record.split(lineSeparator);
 					}
 				}
 					
